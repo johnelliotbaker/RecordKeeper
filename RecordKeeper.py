@@ -60,6 +60,14 @@ class RecordKeeper(object):
             else:
                 if record != '':
                     print("Abnormal record found >> '{}'".format(record))
+    
+    def validateRecord(self):
+        d = self.dictionary
+        sRecord = set()
+        aDuplicate = []
+        for k,v in iter(d):
+            if v in sRecord:
+                aDuplicate.append(k)
 
     def saveRecord(self, filename='record.txt', encoding=None):
         if encoding is None:
@@ -78,7 +86,7 @@ class RecordKeeper(object):
     def getFilelist(self):
         aFilename = []
         for ft in ALLOWED_FILETYPES:
-            aFilename += glob.glob(pjoin(directory, '*.{}'.format(ft)))
+            aFilename += glob.glob1(directory, '*.{}'.format(ft))
         self.aFilename = aFilename
         return self.aFilename
 
@@ -90,11 +98,6 @@ class RecordKeeper(object):
             hsh = getMd5(src)
             if hsh not in self.dictionary:
                 self.dictionary[hsh] = fn
-            else:
-                dst = self.dictionary[hsh]
-                src = fn
-                if dst != src:
-                    warnDuplicate(src, dst)
         self.saveRecord()
 
     def restore(self):
