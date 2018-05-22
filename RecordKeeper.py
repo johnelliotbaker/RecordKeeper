@@ -68,9 +68,22 @@ class RecordKeeper(object):
         d = self.dictionary
         sRecord = set()
         aDuplicate = []
-        for k,v in iter(d):
+        for k,v in d.items():
             if v in sRecord:
                 aDuplicate.append(k)
+            else:
+                sRecord.add(v)
+        if len(aDuplicate) > 0:
+            print("\n")
+            print("=================={}==================".format(
+                'validation error'))
+            print("During the validation of the record")
+            print("following hashes were found to be invalid")
+            for dup in aDuplicate:
+                print('    ' + dup)
+            print("Please fix or purge the record")
+            print("=================={}==================".format(
+                '================'))
 
     def saveRecord(self, filename='record.txt', encoding=None):
         if encoding is None:
@@ -140,5 +153,6 @@ if __name__ == "__main__":
         rk.record()
     elif command.lower() == 'restore':
         rk.restore()
+        rk.validateRecord()
     else:
         print('Unrecognized command {}'.format(command))
