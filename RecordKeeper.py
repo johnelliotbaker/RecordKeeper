@@ -7,7 +7,10 @@ import shutil
 
 
 N_MAX_CHUNKS = 60
-ALLOWED_FILETYPES = ['mkv', 'mp4', 'avi', 'wmv']
+ALLOWED_FILETYPES = [
+        'mkv', 'mp4', 'avi', 'wmv',
+        'flv', 'webm', 'mpg', 'mpeg',
+        'm4v', 'asf', 'rm', 'rmvb']
 RECORD_DELIM = ':::::'
 
 
